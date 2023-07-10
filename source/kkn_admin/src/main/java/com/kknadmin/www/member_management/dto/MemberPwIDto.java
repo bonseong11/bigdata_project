@@ -1,4 +1,4 @@
-package com.kknadmin.www.member_management;
+package com.kknadmin.www.member_management.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,13 +9,10 @@ import lombok.Data;
 @Entity
 @Table(name="member")
 @Data
-public class MemberListDto {
+public class MemberPwIDto {
 	@Id
 	private String userid;
 	
 	@Column(nullable = false)
-	private String nickname;
-	
-	@Column(nullable = false)
-	private String email;
+	private String password;
 }
