@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@//:1521/xepdb1
-    username: 
-    password: 
+    url: jdbc:oracle:thin:@//192.168.41.7:1521/xepdb1
+    username: healthcare
+    password: team1!
 
 logging:
   level:
