@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kknadmin.www.member_management.dto.MemberListDto;
+
 @Controller
 @RequestMapping("/member")
 public class MemberManagementController {
