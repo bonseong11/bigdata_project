@@ -1,4 +1,4 @@
-package com.kknadmin.www.member_management;
+package com.kknadmin.www.member_management.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

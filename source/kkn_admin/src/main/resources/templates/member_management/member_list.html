@@ -56,7 +56,7 @@
 				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i})}">[[${i+1}]]</a>
 			</li>
 		</th:block>
-		<th:block th:if="${pages.number} >= ${pages.totalPages} - 3">
+		<th:block th:if="${pages.number} >= ${pages.totalPages} - 3 and ${pages.totalPages} - 2 > 0 and ${pages.number} > 1">
 			<li th:each="i:${#numbers.sequence(pages.totalPages - 5, pages.totalPages - 1)}">
 				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
 				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i})}">[[${i+1}]]</a>

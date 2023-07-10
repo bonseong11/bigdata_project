@@ -6,6 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kknadmin.www.member_management.dto.MemberListDto;
+import com.kknadmin.www.member_management.dto.MemberPwIDto;
+import com.kknadmin.www.member_management.repository.MemberListDtoManagementRepository;
+import com.kknadmin.www.member_management.repository.MemberManagementRepository;
+import com.kknadmin.www.member_management.repository.MemberPwIDtoRepository;
+
 @Service
 @Transactional
 public class MemberManagementService {
@@ -16,7 +22,7 @@ public class MemberManagementService {
 	private MemberListDtoManagementRepository memberListDtoRepository;
 	
 	@Autowired
-	private MemberPwIRepository memberPwIRepository;
+	private MemberPwIDtoRepository memberPwIDtoRepository;
 	
 	public Page<MemberListDto> membersListSearch(Pageable pageable) {
 		return memberListDtoRepository.findAll(pageable);
@@ -28,7 +34,7 @@ public class MemberManagementService {
 		member.setUserid(userid);
 		member.setPassword(userid);
 		
-		memberPwIRepository.save(member);
+		memberPwIDtoRepository.save(member);
 	}
 	
 	public void memberDelete(String userid) {
