@@ -1,4 +1,4 @@
-package com.kknadmin.www.login;
+package com.kknadmin.www.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
