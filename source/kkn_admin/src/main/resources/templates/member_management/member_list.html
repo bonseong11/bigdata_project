@@ -1,71 +1,85 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  
-  <meta th:name="_csrf" th:content="${_csrf.token}">
-  <meta th:name="_csrf_header" th:content="${_csrf.headerName}">
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  
-  <link th:href="@{css/member_management/member_management.css}" type="text/css" rel="stylesheet">
-  
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script th:src="@{js/member_management/member_list.js}"></script>
-  
-  <title>전체 회원 목록</title>
+	<meta charset="UTF-8">
+
+	<meta th:name="_csrf" th:content="${_csrf.token}">
+	<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+	<link th:href="@{/css/member_management/member_management.css}" type="text/css" rel="stylesheet">
+
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script th:src="@{/js/member_management/member_list.js}"></script>
+
+	<title>전체 회원 목록</title>
 </head>
 <body>
-	<!-- 임시 버튼 -->
-	<button id="home">홈으로</button>
-	<!-- -->
-	
-	<h1>전체 회원 목록</h1>
-	<table>
-		<caption id="page-count">페이지: [[${pages.number+1}]] / [[${pages.totalPages}]]</caption>
-		<tr>
-			<th>ID</th>
-			<th>Nickname</th>
-			<th>Email</th>
-			<th>관리</th>
-		</tr>
-		<tr th:each="member:${memberslist}">
-			<td th:text="${member['userid']}"></td>
-			<td th:text="${member['nickname']}"></td>
-			<td th:text="${member['email']}"></td>
-			<td class="button-group">
-				<button class="button left-button pwclear"><i class="fas fa-key"></i>비밀번호 초기화</button>
-				<button class="button deluser"><i class="fas fa-trash-alt"></i>삭제</button>
-			</td>
-		</tr>
-	</table>
-	<ul class="page">
-		<li>
-			<span th:if="${pages.first}">&lt;&lt;</span>
-			<a th:if="${not pages.first}" th:href="@{${url}(page=${pages.number - 1})}">&lt;&lt;</a>
+<!-- 임시 버튼 -->
+<button id="home">홈으로</button>
+<button id="memberlist"> 회원 리스트 </button>
+
+<script>
+	function goToMemberList() {
+		window.location.href = "member_list.html";
+	}
+</script>
+
+<!-- -->
+
+<h1>전체 회원 목록</h1>
+<h2><div id="search-bar">
+	<form th:action="@{/member/search}" method="get">
+		<input type="text" name="userId" placeholder="ID 검색">
+		<button type="submit">검색</button>
+	</form>
+</div></h2>
+<table>
+	<caption id="page-count">페이지: [[${pages.number+1}]] / [[${pages.totalPages}]]</caption>
+	<tr>
+		<th>ID</th>
+		<th>Nickname</th>
+		<th>Email</th>
+		<th>관리</th>
+	</tr>
+	<tr th:each="member:${memberslist}">
+		<td th:text="${member['userid']}"></td>
+		<td th:text="${member['nickname']}"></td>
+		<td th:text="${member['email']}"></td>
+		<td class="button-group">
+			<button class="button left-button pwclear"><i class="fas fa-key"></i>비밀번호 초기화</button>
+			<button class="button deluser"><i class="fas fa-trash-alt"></i>삭제</button>
+		</td>
+	</tr>
+</table>
+<ul class="page">
+	<li>
+		<span th:if="${pages.first}">&lt;&lt;</span>
+		<a th:if="${not pages.first}" th:href="@{${url}(page=${pages.number - 1}, userId=${param.userId})}">&lt;&lt;</a>
+	</li>
+	<th:block th:if="${pages.number} > 1 and ${pages.number} < ${pages.totalPages} - 3">
+		<li th:each="i:${#numbers.sequence(pages.number - 2, pages.number + 2)}">
+			<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+			<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, userId=${param.userId})}">[[${i+1}]]</a>
 		</li>
-		<th:block th:if="${pages.number} > 1 and ${pages.number} < ${pages.totalPages} - 3">
-			<li th:each="i:${#numbers.sequence(pages.number - 2, pages.number + 2)}">
-				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
-				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i})}">[[${i+1}]]</a>
-			</li>
-		</th:block>
-		<th:block th:if="${pages.number} <= 1">
-			<li th:each="i:${#numbers.sequence(0, 4)}">
-				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
-				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i})}">[[${i+1}]]</a>
-			</li>
-		</th:block>
-		<th:block th:if="${pages.number} >= ${pages.totalPages} - 3 and ${pages.totalPages} - 2 > 0 and ${pages.number} > 1">
-			<li th:each="i:${#numbers.sequence(pages.totalPages - 5, pages.totalPages - 1)}">
-				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
-				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i})}">[[${i+1}]]</a>
-			</li>
-		</th:block>
-		<li>
-			<span th:if="${pages.last}">&gt;&gt;</span>
-			<a th:if="${not pages.last}" th:href="@{${url}(page=(${pages.number+1}))}">&gt;&gt;</a>
+	</th:block>
+	<th:block th:if="${pages.number} <= 1">
+		<li th:each="i:${#numbers.sequence(0, 4)}">
+			<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+			<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, userId=${param.userId})}">[[${i+1}]]</a>
 		</li>
-	</ul>
+	</th:block>
+	<th:block th:if="${pages.number} >= ${pages.totalPages} - 3 and ${pages.totalPages} - 2 > 0 and ${pages.number} > 1">
+		<li th:each="i:${#numbers.sequence(pages.totalPages - 5, pages.totalPages - 1)}">
+			<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+			<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, userId=${param.userId})}">[[${i+1}]]</a>
+		</li>
+	</th:block>
+	<li>
+		<span th:if="${pages.last}">&gt;&gt;</span>
+		<a th:if="${not pages.last}" th:href="@{${url}(page=(${pages.number+1}), userId=${param.userId})}">&gt;&gt;</a>
+	</li>
+</ul>
 </body>
 </html>
