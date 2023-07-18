@@ -1,0 +1,209 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:kkn_/drawer/drawer.dart';
+//import 'package:kkn/data_process/home/home_data_loader.dart';
+
+import 'package:kkn_/home/button.dart';
+import 'package:kkn_/home/currency_card.dart';
+import 'package:kkn_/home/home_dto.dart';
+
+//import 'package:logger/logger.dart';
+
+//import 'package:kkn_test/calendar/calendar_screen.dart';
+//import 'package:kkn_test/community/community_screen.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key, required this.homeDto}) : super(key: key);
+
+  final HomeDto homeDto;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late String currentDate;
+
+  @override
+  void initState() {
+    super.initState();
+    currentDate = DateFormat.yMMMMd().format(DateTime.now());
+  }
+
+  void pageReload() {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF181818),
+      appBar: AppBar(
+          title: const Text('Kcal Know now eat!'),
+          backgroundColor: const Color(0xFF181818),
+          centerTitle: true),
+      drawer: AppDrawer(homeDto: widget.homeDto),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        currentDate,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      widget.homeDto.nickname,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+              child: Text(
+                'Today',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.yellow.withOpacity(0.8),
+                ),
+              ),
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                '섭취한 칼로리Kcal',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Button(
+                  text: '${widget.homeDto.recommandCalories} Kcal',
+                  bgColor: const Color.fromARGB(255, 215, 204, 73),
+                  textColor: Colors.black,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Button(
+                  text: '남은 칼로리',
+                  bgColor: Color.fromARGB(255, 215, 204, 73),
+                  textColor: Colors.black,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Record',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CurrencyCard(
+                      name: '카메라',
+                      code: '',
+                      icon: Icons.camera_alt_rounded,
+                      isInverted: true,
+                      order: 0,
+                      homeDto: widget.homeDto,
+                      homeReloadFunction: pageReload,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    CurrencyCard(
+                      name: '걸음수',
+                      code: '걸음',
+                      icon: Icons.directions_walk,
+                      isInverted: false,
+                      order: 1,
+                      homeDto: widget.homeDto,
+                      homeReloadFunction: pageReload,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    CurrencyCard(
+                      name: '총거리',
+                      code: 'Km',
+                      icon: Icons.place,
+                      isInverted: false, // 컬러반전 시키기
+                      order: 2,
+                      homeDto: widget.homeDto,
+                      homeReloadFunction: pageReload,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    CurrencyCard(
+                      name: '물',
+                      code: 'ml',
+                      icon: Icons.water_drop,
+                      isInverted: false,
+                      order: 3,
+                      homeDto: widget.homeDto,
+                      homeReloadFunction: pageReload,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
