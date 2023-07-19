@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.kknadmin.www.entity.Admin;
+import com.kknadmin.www.repository.AdminRepository;
 
 @Service
 public class AdminLoginService implements UserDetailsService{

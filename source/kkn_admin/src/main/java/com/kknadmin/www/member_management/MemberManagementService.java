@@ -1,10 +1,16 @@
 package com.kknadmin.www.member_management;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.kknadmin.www.entity.Member;
+import com.kknadmin.www.repository.MemberManagementRepository;
 
 @Service
 @Transactional
@@ -12,23 +18,20 @@ public class MemberManagementService {
 	@Autowired
 	private MemberManagementRepository memberRepository;
 	
-	@Autowired
-	private MemberListDtoManagementRepository memberListDtoRepository;
+	public Page<MemberShowDto> membersListSearch(Pageable pageable) {
+		return this.toMemberShowDtoPageConvert(memberRepository.findAll(pageable), pageable);
+	}
 	
-	@Autowired
-	private MemberPwIRepository memberPwIRepository;
-	
-	public Page<MemberListDto> membersListSearch(Pageable pageable) {
-		return memberListDtoRepository.findAll(pageable);
+	private PageImpl<MemberShowDto> toMemberShowDtoPageConvert(Page<Member> allMemberPage, Pageable pageable) {		
+		return new PageImpl<MemberShowDto>(allMemberPage.getContent().stream().map(MemberShowDto::toMemberListDtoConvert).collect(Collectors.toList()), pageable, allMemberPage.getTotalElements());
 	}
 	
 	public void pwInitialization(String userid) {
-		MemberPwIDto member = new MemberPwIDto();
+		Member member = memberRepository.findById(userid).get();
 		
-		member.setUserid(userid);
 		member.setPassword(userid);
 		
-		memberPwIRepository.save(member);
+		memberRepository.save(member);
 	}
 	
 	public void memberDelete(String userid) {

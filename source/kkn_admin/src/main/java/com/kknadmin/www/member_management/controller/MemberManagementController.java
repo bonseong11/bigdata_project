@@ -1,4 +1,4 @@
-package com.kknadmin.www.member_management;
+package com.kknadmin.www.member_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kknadmin.www.member_management.MemberManagementService;
+import com.kknadmin.www.member_management.MemberShowDto;
+
 @Controller
 @RequestMapping("/member")
 public class MemberManagementController {
@@ -16,7 +19,7 @@ public class MemberManagementController {
 	
 	@GetMapping("")
 	public String allMemberPrintProcess(Model model, Pageable pageable) {
-		Page<MemberListDto> pages = memberManagementService.membersListSearch(pageable);
+		Page<MemberShowDto> pages = memberManagementService.membersListSearch(pageable);
 		
 		model.addAttribute("pages", pages);
 		model.addAttribute("memberslist", pages.getContent());

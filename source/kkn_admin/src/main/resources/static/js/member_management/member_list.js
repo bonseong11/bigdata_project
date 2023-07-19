@@ -47,4 +47,8 @@ $(document).ready(function() {
 	$("#home").click(function() {
 		window.open("/", "_self");
 	})
+
+	$("#memberlist").click(function() {
+		window.open("/member", "_self");
+	})
 });
