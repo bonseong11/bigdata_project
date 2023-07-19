@@ -5,42 +5,67 @@
 
 	<meta th:name="_csrf" th:content="${_csrf.token}">
 	<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
-
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+	<link th:href="@{/css/button/list_button.css}" type="text/css" rel="stylesheet">
 	<link th:href="@{/css/member_management/member_management.css}" type="text/css" rel="stylesheet">
-
+	<link th:href="@{/css/button/search_button.css}" type="text/css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<script th:src="@{/js/member_management/member_list.js}"></script>
 
 	<title>전체 회원 목록</title>
 </head>
 <body>
-<!-- 임시 버튼 -->
-<button id="home">홈으로</button>
-<button id="memberlist"> 회원 리스트 </button>
 
+<!-- 임시 버튼 -->
+
+<button id="home" class="custom-btn btn-8">홈으로</button>
+
+<button id="memberlist" class="custom-btn1 btn-8">회원 리스트</button>
 <script>
 	function goToMemberList() {
 		window.location.href = "member_list.html";
 	}
 </script>
 
-<!-- -->
-
 <h1>전체 회원 목록</h1>
-<h2><div id="search-bar">
-	<form th:action="@{/member/search}" method="get">
-		<input type="text" name="userId" placeholder="ID 검색">
-		<button type="submit">검색</button>
+<div id="search-bar">
+	<form th:action="@{/member/search}" method="get" class="search-form">
+		<div class="search-container">
+			<select name="category" class="search-select">
+				<option value="userId">ID</option>
+				<option value="nickname">Nickname</option>
+				<option value="email">Email</option>
+			</select>
+			<input type="text" placeholder="검색어 입력" onchange="updatePlaceholder(this)" class="search-input">
+			<button type="submit" class="search-button">검색</button>
+			<input type="hidden" name="keyword">
+		</div>
 	</form>
-</div></h2>
+</div>
+<script>
+	function updatePlaceholder(input) {
+		var category = document.querySelector('select[name="category"]').value;
+		if (category === "userId") {
+			input.setAttribute("name", "userId");
+			input.setAttribute("placeholder", "ID 검색");
+		} else if (category === "nickname") {
+			input.setAttribute("name", "nickname");
+			input.setAttribute("placeholder", "닉네임 검색");
+		} else if (category === "email") {
+			input.setAttribute("name", "email");
+			input.setAttribute("placeholder", "이메일 검색");
+		}
+	}
+</script>
+
 <table>
 	<caption id="page-count">페이지: [[${pages.number+1}]] / [[${pages.totalPages}]]</caption>
 	<tr>
 		<th>ID</th>
-		<th>Nickname</th>
 		<th>Email</th>
+		<th>Nickname</th>
 		<th>관리</th>
 	</tr>
 	<tr th:each="member:${memberslist}">
