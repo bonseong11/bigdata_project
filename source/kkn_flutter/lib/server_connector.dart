@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class ServerConnector {
-  String appServerUrl = "http://:8080";
+  String appServerUrl = "http://192.168.41.192:8080";
   Map<String, String> headers = {'Content-Type': 'application/json'};
 
   Future<String> sendProcess(String location, String body) async {
