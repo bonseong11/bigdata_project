@@ -6,7 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:kkn/drawer/drawer.dart';
+import 'package:kkn/login/login_view.dart';
+
 import 'package:kkn/home/button.dart';
 import 'package:kkn/home/currency_card.dart';
 import 'package:kkn/home/dto/home_dto.dart';
@@ -40,18 +41,98 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFF181818),
-        appBar: AppBar(
-            title: const Text('Kcal Know now eat!'),
-            backgroundColor: const Color(0xFF181818),
-            centerTitle: true),
-        drawer: AppDrawer(homeDto: widget.homeDto),
-        body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
+      backgroundColor: const Color(0xFF181818),
+      appBar: AppBar(
+          title: const Text('Kcal Know now eat!'),
+          backgroundColor: const Color(0xFF181818),
+          centerTitle: true),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.black,
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 180,
+                  height: 350,
+                ),
+              ),
             ),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            ListTile(
+              leading: Icon(
+                Icons.home,
+                color: Colors.grey[850],
+              ),
+              title: const Text('홈'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeView(homeDto: widget.homeDto),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.people,
+                color: Colors.grey[850],
+              ),
+              title: const Text('Coummnity'),
+              onTap: () {
+                /*Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Community(),
+                  ),
+                );*/
+                // Do something
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_month,
+                color: Colors.grey[850],
+              ),
+              title: const Text('Calendar'),
+              onTap: () {
+                /*Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Calendar(),
+                  ),
+                );*/
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: Colors.grey[850],
+              ),
+              title: const Text('로그아웃'),
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const LoginView()));
+                // Do something
+              },
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        // 스크롤 할 수 있게 해줌
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -151,58 +232,55 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: 10,
               ),
-              Expanded(
-                  child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CurrencyCard(
-                      name: '카메라',
-                      code: '',
-                      icon: Icons.camera_alt_rounded,
-                      isInverted: true, // 컬러반전 시키기
-                      order: 0,
-                      homeDto: widget.homeDto,
-                      homeReloadFunction: pageReload,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    CurrencyCard(
-                      name: '걸음 수',
-                      code: '걸음',
-                      icon: Icons.directions_walk,
-                      isInverted: false,
-                      order: 1,
-                      homeDto: widget.homeDto,
-                      homeReloadFunction: pageReload,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    CurrencyCard(
-                      name: '총 거리',
-                      code: 'Km',
-                      icon: Icons.place,
-                      isInverted: false, // 컬러반전 시키기
-                      order: 2,
-                      homeDto: widget.homeDto,
-                      homeReloadFunction: pageReload,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    CurrencyCard(
-                      name: '물',
-                      code: 'ml',
-                      icon: Icons.water_drop,
-                      isInverted: false,
-                      order: 3,
-                      homeDto: widget.homeDto,
-                      homeReloadFunction: pageReload,
-                    ),
-                  ],
-                ),
-              ))
-            ])));
+              CurrencyCard(
+                name: '카메라',
+                code: '',
+                icon: Icons.camera_alt_rounded,
+                isInverted: true, // 컬러반전 시키기
+                order: 0,
+                homeDto: widget.homeDto,
+                homeReloadFunction: pageReload,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              CurrencyCard(
+                name: '걸음 수',
+                code: '걸음',
+                icon: Icons.directions_walk,
+                isInverted: false,
+                order: 1,
+                homeDto: widget.homeDto,
+                homeReloadFunction: pageReload,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              CurrencyCard(
+                name: '총 거리',
+                code: 'Km',
+                icon: Icons.place,
+                isInverted: false, // 컬러반전 시키기
+                order: 2,
+                homeDto: widget.homeDto,
+                homeReloadFunction: pageReload,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              CurrencyCard(
+                name: '물',
+                code: 'ml',
+                icon: Icons.water_drop,
+                isInverted: false,
+                order: 3,
+                homeDto: widget.homeDto,
+                homeReloadFunction: pageReload,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
