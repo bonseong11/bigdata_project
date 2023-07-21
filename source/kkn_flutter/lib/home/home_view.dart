@@ -88,7 +88,7 @@ class _HomeViewState extends State<HomeView> {
                 height: 15,
               ),
               Text(
-                'Today',
+                '오늘 섭취한 칼로리',
                 style: TextStyle(
                   fontSize: 22,
                   color: Colors.yellow.withOpacity(0.8),
@@ -97,9 +97,9 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: 5,
               ),
-              const Text(
-                '섭취한 칼로리Kcal',
-                style: TextStyle(
+              Text(
+                '${(double.parse(widget.homeDto.consumeCalories) * 10).round() * 0.1} Kcal',
+                style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -116,9 +116,10 @@ class _HomeViewState extends State<HomeView> {
                     bgColor: const Color.fromARGB(255, 215, 204, 73),
                     textColor: Colors.black,
                   ),
-                  const Button(
-                    text: '남은 칼로리',
-                    bgColor: Color.fromARGB(255, 215, 204, 73),
+                  Button(
+                    text:
+                        '${((double.parse(widget.homeDto.recommandCalories) - double.parse(widget.homeDto.consumeCalories)) * 10).round() * 0.1} Kcal',
+                    bgColor: const Color.fromARGB(255, 215, 204, 73),
                     textColor: Colors.black,
                   ),
                 ],
