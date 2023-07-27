@@ -22,6 +22,11 @@ public class CommunityController {
 		return communityService.communityHomeInformationLoadService(loadTimestamp);
 	}
 	
+	@PostMapping("/listadd")
+	public List<CommunityLoadDto> communityListAdd(@RequestBody String lastPostWriteTimeStamp) {
+		return communityService.communityListAddService(lastPostWriteTimeStamp);
+	}
+	
 	@PostMapping("/create")
 	public void postSave(@RequestBody CommunitySaveDto communitySaveDto) {
 		communityService.postSaveService(communitySaveDto);

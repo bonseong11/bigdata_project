@@ -140,8 +140,7 @@ class _SignupViewState extends State<SignupView> {
                 decoration: InputDecoration(
                   labelText: '닉네임',
                   labelStyle: const TextStyle(color: Colors.white),
-                  prefixIcon:
-                      const Icon(Icons.person_outline, color: Colors.white),
+                  prefixIcon: const Icon(Icons.person_pin, color: Colors.white),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white),
@@ -168,7 +167,7 @@ class _SignupViewState extends State<SignupView> {
                   labelText: '이메일',
                   labelStyle: const TextStyle(color: Colors.white),
                   prefixIcon:
-                      const Icon(Icons.person_outline, color: Colors.white),
+                      const Icon(Icons.email_outlined, color: Colors.white),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white),
@@ -192,8 +191,8 @@ class _SignupViewState extends State<SignupView> {
                     decoration: InputDecoration(
                       labelText: '성별',
                       labelStyle: const TextStyle(color: Colors.white),
-                      prefixIcon:
-                          const Icon(Icons.person_outline, color: Colors.white),
+                      prefixIcon: const Icon(Icons.contact_emergency_outlined,
+                          color: Colors.white),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(color: Colors.white),
@@ -266,8 +265,7 @@ class _SignupViewState extends State<SignupView> {
                 decoration: InputDecoration(
                   labelText: '키 (단위: cm)',
                   labelStyle: const TextStyle(color: Colors.white),
-                  prefixIcon:
-                      const Icon(Icons.person_outline, color: Colors.white),
+                  prefixIcon: const Icon(Icons.height, color: Colors.white),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white),
@@ -293,8 +291,8 @@ class _SignupViewState extends State<SignupView> {
                 decoration: InputDecoration(
                   labelText: '체중 (단위: kg)',
                   labelStyle: const TextStyle(color: Colors.white),
-                  prefixIcon:
-                      const Icon(Icons.person_outline, color: Colors.white),
+                  prefixIcon: const Icon(Icons.fitness_center_outlined,
+                      color: Colors.white),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white),

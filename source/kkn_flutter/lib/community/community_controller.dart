@@ -14,12 +14,36 @@ class CommunityController {
 
       List<PostDto> postList = [];
       for (var rawPost in json.decode(responseBody)) {
-        postList.add(PostDto.fromJson(rawPost));
+        PostDto tempPostDto = PostDto.fromJson(rawPost);
+
+        postList.add(tempPostDto);
       }
 
       return postList;
     } catch (exception) {
       serverConnector.serverExceptionProcess(exception);
+
+      return [];
+    }
+  }
+
+  Future<List<PostDto>> postListAdd(String lastPostWriteTimeStamp) async {
+    ServerConnector serverConnector = ServerConnector();
+
+    try {
+      String responseBody = await serverConnector.sendProcess(
+          "/community/listadd", lastPostWriteTimeStamp);
+
+      List<PostDto> postList = [];
+      for (var rawPost in json.decode(responseBody)) {
+        PostDto tempPostDto = PostDto.fromJson(rawPost);
+
+        postList.add(tempPostDto);
+      }
+
+      return postList;
+    } catch (exeption) {
+      serverConnector.serverExceptionProcess(exeption);
 
       return [];
     }

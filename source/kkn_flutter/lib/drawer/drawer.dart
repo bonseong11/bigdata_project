@@ -5,8 +5,14 @@ import 'package:kkn/community/community_controller.dart';
 import 'package:kkn/home/dto/home_dto.dart';
 import 'package:kkn/home/home_view.dart';
 import 'package:kkn/community/community_view.dart';
+import 'package:kkn/like/like_controller.dart';
+import 'package:kkn/like/dto/like_load_response_dto.dart';
+import 'package:kkn/like/dto/like_load_send_dto.dart';
 import 'package:kkn/login/login_view.dart';
 import 'package:kkn/calendar/calendar_view.dart';
+import 'package:kkn/mypage/dto/mypage_dto.dart';
+import 'package:kkn/mypage/dto/mypage_response_dto.dart';
+import 'package:kkn/mypage/mypage_controller.dart';
 import 'package:kkn/mypage/mypage_view.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -19,12 +25,53 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  void toCommunity(List<PostDto> postList) {
+  void myPageViewPrepare() async {
+    MypageResponseDto mypageResponseDto =
+        await MypageController().memberInformationLoad(widget.homeDto.userid);
+
+    if (mypageResponseDto.errorMessage.isEmpty) {
+      toMyPageView(mypageResponseDto.mypageDto!);
+    }
+  }
+
+  void toMyPageView(MypageDto myPageDto) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            CommunityView(homeDto: widget.homeDto, postList: postList),
+            MypageView(homeDto: widget.homeDto, myPageDto: myPageDto),
+      ),
+    );
+  }
+
+  void communityViewPrepare() async {
+    List<PostDto> postList =
+        await CommunityController().postListLoad(DateTime.now().toString());
+
+    List<int> postNumList = postNumSelect(postList);
+    LikeLoadResponseDto likeLoadResponseDto = await LikeController()
+        .likeCheckListLoad(LikeLoadSendDto(widget.homeDto.userid, postNumList));
+
+    toCommunity(postList, likeLoadResponseDto.likeCheckList);
+  }
+
+  List<int> postNumSelect(List<PostDto> postList) {
+    List<int> postNumList = [];
+    for (PostDto post in postList) {
+      postNumList.add(int.parse(post.num));
+    }
+
+    return postNumList;
+  }
+
+  void toCommunity(List<PostDto> postList, List<dynamic> likeCheckList) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CommunityView(
+            homeDto: widget.homeDto,
+            postList: postList,
+            likeCheckList: likeCheckList),
       ),
     );
   }
@@ -69,14 +116,7 @@ class _AppDrawerState extends State<AppDrawer> {
               color: Colors.grey[850],
             ),
             title: const Text('마이 페이지'),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MypageView(homeDto: widget.homeDto),
-                ),
-              );
-            },
+            onTap: myPageViewPrepare,
           ),
           ListTile(
               leading: Icon(
@@ -84,12 +124,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 color: Colors.grey[850],
               ),
               title: const Text('커뮤니티'),
-              onTap: () async {
-                List<PostDto> postList = await CommunityController()
-                    .postListLoad(DateTime.now().toString());
-
-                toCommunity(postList);
-              }),
+              onTap: communityViewPrepare),
           ListTile(
             leading: Icon(
               Icons.calendar_month,

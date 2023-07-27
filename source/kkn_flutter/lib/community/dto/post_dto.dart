@@ -1,17 +1,22 @@
+import 'package:kkn/comment/dto/comment_load_dto.dart';
+
 class PostDto {
   String num;
   String userid;
   String nickname;
+  String writeDateTimeStamp;
 
   String title;
   String content;
   int likes;
-  // List<Comment> comments; // 댓글 목록
+
+  List<CommentLoadDto>? commentList; // 댓글 목록
 
   PostDto(
       {required this.num,
       required this.userid,
       required this.nickname,
+      required this.writeDateTimeStamp,
       required this.title,
       required this.content})
       : likes = 0;
@@ -21,7 +26,22 @@ class PostDto {
       : num = json['num'].toString(),
         userid = json["userid"],
         nickname = json["nickname"],
+        writeDateTimeStamp = json["writeDateTimeStamp"],
         title = json['title'],
         content = json['content'],
-        likes = json['likes'];
+        likes = json['likes'] {
+    if (json['commentslist'] != null) {
+      commentList = toCommentLoadDtoProcess(json['commentslist']);
+    }
+  }
+
+  List<CommentLoadDto> toCommentLoadDtoProcess(List<dynamic> rawCommentList) {
+    List<CommentLoadDto> commentList = [];
+
+    for (var comment in rawCommentList) {
+      commentList.add(CommentLoadDto.fromJson(comment));
+    }
+
+    return commentList;
+  }
 }

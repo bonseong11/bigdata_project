@@ -5,6 +5,9 @@ import 'package:kkn/home/dto/home_dto.dart';
 import 'package:kkn/community/dto/post_save_dto.dart';
 import 'package:kkn/community/dto/post_dto.dart';
 import 'package:kkn/community/community_view.dart';
+import 'package:kkn/like/like_controller.dart';
+import 'package:kkn/like/dto/like_load_response_dto.dart';
+import 'package:kkn/like/dto/like_load_send_dto.dart';
 
 class Post extends StatefulWidget {
   const Post({Key? key, required this.homeDto}) : super(key: key);
@@ -27,20 +30,37 @@ class _PostState extends State<Post> {
 
     if (errorMessage.isEmpty) {
       List<PostDto> postList = await communityController.postListLoad(
-          DateTime.now().add(const Duration(seconds: 1)).toString());
+          DateTime.now().add(const Duration(seconds: 2)).toString());
 
-      toCommunity(widget.homeDto, postList);
+      List<int> postNumList = postNumSelect(postList);
+      LikeLoadResponseDto likeLoadResponseDto = await LikeController()
+          .likeCheckListLoad(
+              LikeLoadSendDto(widget.homeDto.userid, postNumList));
+
+      toCommunity(widget.homeDto, postList, likeLoadResponseDto.likeCheckList);
     } else {
       setState(() {});
     }
   }
 
-  void toCommunity(HomeDto homeDto, List<PostDto> postList) {
+  List<int> postNumSelect(List<PostDto> postList) {
+    List<int> postNumList = [];
+    for (PostDto post in postList) {
+      postNumList.add(int.parse(post.num));
+    }
+
+    return postNumList;
+  }
+
+  void toCommunity(
+      HomeDto homeDto, List<PostDto> postList, List<dynamic> likeCheckList) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            CommunityView(homeDto: widget.homeDto, postList: postList),
+        builder: (context) => CommunityView(
+            homeDto: widget.homeDto,
+            postList: postList,
+            likeCheckList: likeCheckList),
       ),
     );
   }
