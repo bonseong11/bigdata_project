@@ -2,20 +2,27 @@ package com.kkn.www.home;
 
 import com.kkn.www.entity.HealthRecord;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class HomeDto {
 	String userid;
 	
 	String nickname;
+	double consumeCalories;
 	double recommandCalories;
 	int steps;
 	double waterInTake;
+	
+	public HomeDto(String userid, String nickname, double recommandCalories, int steps, double waterInTake) {
+		this.userid = userid;
+		this.nickname = nickname;
+		this.recommandCalories = recommandCalories;
+		this.steps = steps;
+		this.waterInTake = waterInTake;
+	}
 	
 	public static HomeDto toHomeDtoConvert(HealthRecord healthRecord) {
 		double recommandCalories = mifflinCalculate(healthRecord.getMember().getWeight(), healthRecord.getMember().getHeight(), healthRecord.getMember().getAge());

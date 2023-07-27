@@ -6,6 +6,8 @@ import 'package:kkn/home/dto/home_dto.dart';
 import 'package:kkn/home/home_view.dart';
 import 'package:kkn/community/community_view.dart';
 import 'package:kkn/login/login_view.dart';
+import 'package:kkn/calendar/calendar_view.dart';
+import 'package:kkn/mypage/mypage_view.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key, required this.homeDto}) : super(key: key);
@@ -61,21 +63,21 @@ class _AppDrawerState extends State<AppDrawer> {
               );
             },
           ),
-          /*ListTile(
+          ListTile(
             leading: Icon(
               Icons.account_circle,
               color: Colors.grey[850],
             ),
-            title: const Text('My Page'),
+            title: const Text('마이 페이지'),
             onTap: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MypageUi(homeDto: homeDto),
+                  builder: (context) => MypageView(homeDto: widget.homeDto),
                 ),
               );
             },
-          ),*/
+          ),
           ListTile(
               leading: Icon(
                 Icons.people,
@@ -88,21 +90,21 @@ class _AppDrawerState extends State<AppDrawer> {
 
                 toCommunity(postList);
               }),
-          /*ListTile(
+          ListTile(
             leading: Icon(
               Icons.calendar_month,
               color: Colors.grey[850],
             ),
-            title: const Text('Calendar'),
+            title: const Text('건강 기록'),
             onTap: () {
-              /*Navigator.pushReplacement(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Calendar(homeDto: homeDto),
+                  builder: (context) => CalendarView(homeDto: widget.homeDto),
                 ),
-              );*/
+              );
             },
-          ),*/
+          ),
           ListTile(
             leading: Icon(
               Icons.logout,
