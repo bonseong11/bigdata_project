@@ -4,11 +4,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link th:href="@{/css/member_management.css}" type="text/css" rel="stylesheet">
 	
-	<script th:src="@{/js/member_list.js}"></script>
+	<link th:href="@{/css/post_list_management.css}" type="text/css" rel="stylesheet">
+	
+	<script th:src="@{/js/post_list.js}"></script>
 
-	<title>전체 회원 목록</title>
+	<title>전체 </title>
 </head>
 <body>
 	<div class="row">
@@ -23,25 +24,22 @@
 	
 	<div class="row" id="title">
 		<div class="col p-3">
-			<h1>전체 회원 목록</h1>
+			<h1>전체 커뮤니티 글 목록</h1>
 		</div>
 	</div>
 	
-	<div class="row">
+ 	<div class="row">
 		<div class="col-3"></div>
 		<div class="col-6 p-1">
-			<form th:action="@{/member/search}" method="get" id="search-form">
+			<form th:action="@{/post/search}" method="get" id="search-form">
 				<select name="category" class="search-select" id="search-select">
 					<option th:if="${category} == 'userId' or ${category} == null" value="userId" selected>ID</option>
 					<option th:if="${category} != 'userId' and ${category} != null" value="userId">ID</option>
-					<option th:if="${category} == 'email'" value="email" selected>이메일</option>
-					<option th:if="${category} != 'email'" value="email">이메일</option>
-					<option th:if="${category} == 'nickname'" value="nickname" selected>닉네임</option>
-					<option th:if="${category} != 'nickname'" value="nickname">닉네임</option>
+					<option th:if="${category} == 'title'" value="title" selected>제목</option>
+					<option th:if="${category} != 'title'" value="title">제목</option>
 				</select>
 				<input th:if="${category} == 'userId' or ${category} == null" type="text" class="search-input" id="search-input" placeholder="ID 입력" name="searchinput" th:value="${searchInput}">
-				<input th:if="${category} == 'email'" type="text" class="search-input" id="search-input" placeholder="이메일 입력" name="searchinput" th:value="${searchInput}">
-				<input th:if="${category} == 'nickname'" type="text" class="search-input" id="search-input" placeholder="닉네임 입력" name="searchinput" th:value="${searchInput}">
+				<input th:if="${category} == 'title'" type="text" class="search-input" id="search-input" placeholder="제목 입력" name="searchinput" th:value="${searchInput}">
 				<button type="submit" class="search-button">검색</button>
 			</form>
 			<p id="page-count">페이지: [[${pages.number+1}]] / [[${pages.totalPages}]]</p>
@@ -54,19 +52,16 @@
 		<div class="col-6 p-1">
 			<table>
 				<tr>
-					<th>ID</th>
-					<th>이메일</th>
-					<th>닉네임</th>
-					<th>관리</th>
+					<th>글번호</th>
+					<th>제목</th>
+					<th>작성자(ID)</th>
+					<th>작성일</th>
 				</tr>
-				<tr th:each="member:${memberslist}">
-					<td th:text="${member['userid']}"></td>
-					<td th:text="${member['nickname']}"></td>
-					<td th:text="${member['email']}"></td>
-					<td class="button-group">
-						<button class="button left-button pwclear"><i class="fas fa-key"></i>비밀번호 초기화</button>
-						<button class="button deluser"><i class="fas fa-trash-alt"></i>삭제</button>
-					</td>
+				<tr th:each="post:${postlist}">
+					<td th:text="${post['postNum']}"></td>
+					<td th:text="${post['title']}"><a href="#"></a></td>
+					<td th:text="${post['nickname']} + ' (' + ${post['userid']} + ')'"></td>
+					<td th:text="${post['writeTimestamp']}"></td>
 				</tr>
 			</table>
 		</div>
