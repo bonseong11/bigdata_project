@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kknadmin.www.member_management.MemberManagementService;
 import com.kknadmin.www.member_management.MemberShowDto;
@@ -24,6 +25,18 @@ public class MemberManagementController {
 		model.addAttribute("pages", pages);
 		model.addAttribute("memberslist", pages.getContent());
 		
-		return "member_management/member_list";
+		return "member_list";
 	}
+	
+	@GetMapping("/search")
+    public String searchMember(@RequestParam("category") String category, @RequestParam("searchinput") String searchInput, Pageable pageable, Model model) {
+        Page<MemberShowDto> pages = memberManagementService.searchService(category, searchInput, pageable);
+        
+        model.addAttribute("category", category);
+        model.addAttribute("searchInput", searchInput);
+        model.addAttribute("pages", pages);
+        model.addAttribute("memberslist", pages.getContent());
+
+        return "member_list";
+    }
 }

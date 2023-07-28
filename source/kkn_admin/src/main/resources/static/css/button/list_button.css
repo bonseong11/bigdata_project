@@ -1,6 +1,3 @@
-body {
-    background: #e0e5ec;
-}
 h1 {
     position: relative;
     text-align: center;
@@ -16,15 +13,13 @@ p {
     font-size: 18px;
     color: #676767;
 }
+
 .frame {
     width: 90%;
     margin: 40px auto;
     text-align: center;
 }
-button {
-    margin: 20px;
-    outline: none;
-}
+
 .custom-btn {
     width: 130px;
     height: 40px;
@@ -35,27 +30,6 @@ button {
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: absolute;
-    top: 200px;
-    right: 560px;
-
-}
-
-.custom-btn1 {
-    width: 130px;
-    height: 40px;
-    padding: 10px 25px;
-    border: 2px solid #000;
-    font-family: 'Lato', sans-serif;
-    font-weight: 500;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    display: inline-block;
-    top: 180px;
-    right: 560px;
-
 }
 
 /* 1 */
@@ -71,9 +45,6 @@ button {
 }
 
 /* 2 */
-.btn-2 {
-
-}
 .btn-2:after {
     position: absolute;
     content: "";
@@ -349,16 +320,11 @@ button {
     background-color: #000;
 }
 
-
-
-
 /* 8 */
 .btn-8 {
     line-height: 40px;
     padding: 0;
     background: transparent;
-    position: relative;
-    z-index: 2;
     color: #fff;
     -webkit-perspective: 300px;
     perspective: 300px;

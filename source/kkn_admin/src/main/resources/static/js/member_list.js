@@ -43,12 +43,15 @@ $(document).ready(function() {
 		}
 	});
 	
-	//임시로 만든 button에 대한 js
 	$("#home").click(function() {
 		window.open("/", "_self");
-	})
+	});
 
 	$("#memberlist").click(function() {
 		window.open("/member", "_self");
+	});
+	
+	$("#search-select").change(function() {
+		$('#search-input').attr('placeholder', $('option:selected').text() + ' 입력');
 	})
 });
