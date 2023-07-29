@@ -55,11 +55,11 @@
 					<th>글번호</th>
 					<th>제목</th>
 					<th>작성자(ID)</th>
-					<th>작성일</th>
+					<th>작성일시</th>
 				</tr>
 				<tr th:each="post:${postlist}">
 					<td th:text="${post['postNum']}"></td>
-					<td th:text="${post['title']}"><a href="#"></a></td>
+					<td><a th:href="@{/post/detail(postNum=${post['postNum']}, postListPage=${pages.number}, category=${param.category}, searchinput=${param.searchinput})}" th:text="${post['title']}"></a></td>
 					<td th:text="${post['nickname']} + ' (' + ${post['userid']} + ')'"></td>
 					<td th:text="${post['writeTimestamp']}"></td>
 				</tr>
@@ -93,7 +93,7 @@
 		</th:block>
 		<li>
 			<span th:if="${pages.last}">&gt;&gt;</span>
-			<a th:if="${not pages.last}" th:href="@{${url}(page=(${pages.number+1}), category=${param.category}, searchinput=${param.searchinput})}">&gt;&gt;</a>
+			<a th:if="${not pages.last}" th:href="@{${url}(page=${pages.number+1}, category=${param.category}, searchinput=${param.searchinput})}">&gt;&gt;</a>
 		</li>
 	</ul>
 </body>

@@ -98,7 +98,7 @@
 		</th:block>
 		<li>
 			<span th:if="${pages.last}">&gt;&gt;</span>
-			<a th:if="${not pages.last}" th:href="@{${url}(page=(${pages.number+1}), category=${param.category}, searchinput=${param.searchinput})}">&gt;&gt;</a>
+			<a th:if="${not pages.last}" th:href="@{${url}(page=${pages.number+1}, category=${param.category}, searchinput=${param.searchinput})}">&gt;&gt;</a>
 		</li>
 	</ul>
 </body>

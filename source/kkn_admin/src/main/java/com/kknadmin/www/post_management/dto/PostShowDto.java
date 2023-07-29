@@ -1,4 +1,4 @@
-package com.kknadmin.www.post_management;
+package com.kknadmin.www.post_management.dto;
 
 import com.kknadmin.www.entity.Community;
 
