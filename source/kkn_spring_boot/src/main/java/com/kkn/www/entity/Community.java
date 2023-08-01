@@ -20,7 +20,7 @@ public class Community {
 	String content;
 	int likes;
 	Timestamp writedatetime;
-	
+	String imageurl;
 	@ManyToOne
 	@JoinColumn(name="userid")
 	Member member;

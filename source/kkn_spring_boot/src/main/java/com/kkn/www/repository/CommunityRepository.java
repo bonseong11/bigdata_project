@@ -9,4 +9,5 @@ import com.kkn.www.entity.Community;
 
 public interface CommunityRepository extends JpaRepository<Community, Integer>{
 	List<Community> findTop10ByWritedatetimeLessThanEqualOrderByWritedatetimeDesc(Timestamp loadTimestamp);
+	List<Community> findTop10ByWritedatetimeLessThanOrderByWritedatetimeDesc(Timestamp loadTimestamp);
 }
