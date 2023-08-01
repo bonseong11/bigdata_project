@@ -10,17 +10,20 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="community")
+@Table(name="comments")
 @Data
-public class Community {
+public class Comments {
 	@Id
-	int num;
+	int commentnum;
 	
-	String title;
-	String content;
-	int likes;
-	Timestamp writedatetime;
-	String imageurl;
+	String comments;
+	
+	Timestamp commentwritetimestamp;
+	
+	@ManyToOne
+	@JoinColumn(name="postnum")
+	Community post;
+	
 	@ManyToOne
 	@JoinColumn(name="userid")
 	Member member;

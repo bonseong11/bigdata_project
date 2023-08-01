@@ -67,7 +67,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen> {
             final numericPart = className.toString().split('.')[0];
             final foodResponse = await http.get(
               Uri.parse(
-                'http://192.168.41.236:8080/food?foodcode=$numericPart',
+                'http://192.168.41.204:8080/food?foodcode=$numericPart',
               ),
             );
             if (foodResponse.statusCode == 200) {
@@ -94,7 +94,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen> {
   }
 
   Future<void> calSave() async {
-    final url = Uri.parse('http://192.168.41.236:8080/camera/create');
+    final url = Uri.parse('http://192.168.41.204:8080/camera/create');
     final userid = widget.homeDto.userid;
 
     for (final foodRequests in _foodList) {
@@ -208,7 +208,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('카메라', style: TextStyle(color: Colors.white)),
+        title: const Text('식단 기록', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xff9880F7),
         centerTitle: true,
         actions: [

@@ -139,7 +139,7 @@ class _CalendarViewState extends State<CalendarView> {
                   fontSize: 18,
                 ),
               ),
-              const SizedBox(width: 120),
+              const SizedBox(width: 80),
               SizedBox(
                 child: GestureDetector(
                   onTap: () {

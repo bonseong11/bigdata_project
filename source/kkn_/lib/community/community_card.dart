@@ -323,7 +323,7 @@ class _PostCardState extends State<PostCard> {
                   icon: const Icon(Icons.comment),
                   color: Colors.black,
                 ),
-                const SizedBox(width: 160),
+                const SizedBox(width: 130),
                 if (showMoreCommentsButton && commentList!.length >= 2)
                   TextButton(
                     onPressed: commentListAddProcess,

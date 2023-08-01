@@ -1,20 +1,24 @@
 package com.kkn.www.mypage;
 
-import com.kkn.www.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import com.kkn.www.entity.Member;
 
 @RestController
+@RequestMapping("/mypage")
+@CrossOrigin(origins ="*")
 public class MypageController {
     @Autowired
     MypageService mypageService;
+    
+    @PostMapping("/load")
+    public MyPageDto myPageInformationLoad(@RequestBody String userid) {
+    	return mypageService.mypageInformationLoadService(userid);
+    }
 
     @PostMapping("/update")
-    public boolean mypageController(@RequestBody Member member){
-        mypageService.mypageService(member);
-        return true;
-
+    public void mypageUpdate(@RequestBody Member member) {
+        mypageService.mypageUpdateService(member);
     }
 }

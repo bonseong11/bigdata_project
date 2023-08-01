@@ -93,9 +93,9 @@ class _HomeViewState extends State<HomeView> {
                                 color: Color(0xff9880F7),
                               ),
                             ),
-                            SizedBox(width: 25),
+                            const SizedBox(width: 25),
                             Text(
-                              '${(double.parse(widget.homeDto.consumeCalories))} Kcal',
+                              '${(double.parse(widget.homeDto.consumeCalories)).toStringAsFixed(1)} Kcal',
                               style: const TextStyle(
                                 fontSize: 40,
                                 fontWeight: FontWeight.w600,
@@ -117,9 +117,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             Button(
                                 text:
-                                    '${((double.parse(widget.homeDto.recommandCalories) - double.parse(widget.homeDto.consumeCalories)) * 10).round() * 0.1} Kcal',
+                                    '${(((double.parse(widget.homeDto.recommandCalories) - double.parse(widget.homeDto.consumeCalories)).toStringAsFixed(1)))} Kcal',
                                 bgColor: Colors.white,
-                                textColor: Color(0xff9880F7)),
+                                textColor: const Color(0xff9880F7)),
                           ],
                         ),
                       ],

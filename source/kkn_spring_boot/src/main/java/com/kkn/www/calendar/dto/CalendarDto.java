@@ -1,7 +1,5 @@
 package com.kkn.www.calendar.dto;
 
-import com.kkn.www.entity.HealthRecord;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +16,4 @@ public class CalendarDto {
 		this.steps = steps;
 		this.waterInTake = waterInTake;
 	}
-	
-	public static CalendarDto toCalendarDtoConvert(HealthRecord healthRecord) {
-		return new CalendarDto(healthRecord.getSteps(), healthRecord.getWaterintake());
-    }
 }

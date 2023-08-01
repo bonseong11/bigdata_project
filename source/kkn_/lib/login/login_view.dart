@@ -180,8 +180,7 @@ class _LoginViewState extends State<LoginView> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff9880F7),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                15), // Adjust the value to control the roundness
+                            borderRadius: BorderRadius.circular(15),
                           ),
                           fixedSize: const Size(90, 40),
                         ),

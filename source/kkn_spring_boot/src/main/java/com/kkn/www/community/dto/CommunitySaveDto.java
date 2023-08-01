@@ -12,23 +12,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CommunitySaveDto {
 	String userid;
-	
 	String title;
 	String content;
-	
 	int likes;
-	
+	String imageurl;
 	public static Community toCommunity(CommunitySaveDto communitySaveDto) {
+		System.out.println("CommunitySaveDto: " + communitySaveDto);
 		Community community = new Community();
-		
+
 		community.setTitle(communitySaveDto.getTitle());
 		community.setContent(communitySaveDto.getContent());
-		community.setLikes(communitySaveDto.getLikes());
-		
+		community.setImageurl(communitySaveDto.getImageurl());
 		Member member = new Member();
 		member.setUserid(communitySaveDto.getUserid());
 		community.setMember(member);
-		
+
 		return community;
 	}
 }

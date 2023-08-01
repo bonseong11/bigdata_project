@@ -1,7 +1,5 @@
 package com.kkn.www.entity;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -10,18 +8,17 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="community")
+@Table(name="likechecklist")
 @Data
-public class Community {
+public class LikeCheckList {
 	@Id
-	int num;
+	String id;
 	
-	String title;
-	String content;
-	int likes;
-	Timestamp writedatetime;
-	String imageurl;
 	@ManyToOne
 	@JoinColumn(name="userid")
 	Member member;
+	
+	@ManyToOne
+	@JoinColumn(name="postnum")
+	Community community;
 }
