@@ -1,5 +1,6 @@
 package com.kknadmin.www.member_management;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,26 @@ public class MemberManagementService {
 	
 	public void memberDelete(String userid) {
 		memberRepository.deleteById(userid);
+	}
+	
+	public Page<MemberShowDto> searchService(String category, String searchInput, Pageable pageable) {
+        Page<Member> members = this.selectedMembersLoad(category, searchInput, pageable);
+        
+        List<MemberShowDto> memberShowDtos = members.getContent().stream()
+                .map(MemberShowDto::toMemberListDtoConvert)
+                .collect(Collectors.toList());
+        
+        return new PageImpl<>(memberShowDtos, pageable, members.getTotalElements());
+    }
+	
+	private Page<Member> selectedMembersLoad(String category, String searchInput, Pageable pageable) {
+		switch(category) {
+			case "userId":
+				return memberRepository.findByUseridContaining(searchInput, pageable);
+	        case "nickname":
+	            return memberRepository.findByNicknameContaining(searchInput, pageable);
+	        default:
+	        	return memberRepository.findByEmailContaining(searchInput, pageable);
+		}
 	}
 }

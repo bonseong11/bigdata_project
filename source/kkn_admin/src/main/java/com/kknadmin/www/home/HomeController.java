@@ -19,7 +19,7 @@ public class HomeController {
 	public String homeMove(HttpServletRequest request, Model model) {
 		model.addAttribute("name", homeService.getNameService(this.getId(request)));
 		
-		return "home/home";
+		return "home";
 	}
 	
 	private String getId(HttpServletRequest request) {

@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminLoginController {
 	@GetMapping("/login")
 	public String loginFormMove() {
-		return "login/login";
+		return "login";
 	}
 }
