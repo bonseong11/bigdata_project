@@ -7,7 +7,8 @@
   5. age의 값이 정수가 아니면 회원가입 거부
   6. password 암호화
 */
-
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_/signup/signup_controller.dart';
 import 'package:kkn_/signup/signup_dto.dart';
@@ -25,9 +26,17 @@ class _SignupViewState extends State<SignupView> {
   bool obscurePassword = true;
   String errorMessage = "";
 
+  String encryptPassword(String password) {
+    final bytes = utf8.encode(password);
+    final digest = sha256.convert(bytes);
+
+    return digest.toString();
+  }
+
   void signupProcess() async {
     SignupController signupController = SignupController();
 
+    newMember.password = encryptPassword(newMember.password);
     errorMessage = await signupController.memberSignup(newMember);
 
     if (errorMessage.isEmpty) {

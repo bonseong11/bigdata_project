@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kkn_/home/home_controller.dart';
@@ -25,7 +28,18 @@ class _MypageViewState extends State<MypageView> {
   bool obscurePassword = true;
   String errorMessage = '';
 
+  String encryptPassword(String? password) {
+    if (password == null || password.isEmpty) {
+      return '';
+    }
+    var bytes = utf8.encode(password);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
   void updateProcess() async {
+    mypageDto.password = encryptPassword(mypageDto.password);
+
     errorMessage =
         await MypageController().memberupdate(mypageDto, widget.myPageDto);
 

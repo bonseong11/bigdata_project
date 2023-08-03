@@ -45,6 +45,7 @@ dependencies:
   multi_image_picker: ^4.8.01
   carousel_slider: ^4.2.1
   permission_handler: ^10.4.3
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:

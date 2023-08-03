@@ -39,11 +39,11 @@ class _PostState extends State<Post> {
         selectedAssets: _images,
         cupertinoOptions: const CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: const MaterialOptions(
-          actionBarColor: "#181818",
+          actionBarColor: "#9880F7",
           actionBarTitle: "Select Images",
-          allViewTitle: "All Photos",
+          allViewTitle: "All",
           useDetailsView: true,
-          selectCircleStrokeColor: "#181818",
+          selectCircleStrokeColor: "#9880F7",
         ),
       );
     } on Exception catch (e) {

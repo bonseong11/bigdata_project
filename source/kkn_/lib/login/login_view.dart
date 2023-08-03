@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../home/home_controller.dart';
 import '../home/dto/home_dto.dart';
@@ -7,6 +8,8 @@ import '../home/home_view.dart';
 import '../signup/signup_view.dart';
 import 'login_controller.dart';
 import 'login_input_dto.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -22,12 +25,19 @@ class _LoginViewState extends State<LoginView> {
   String errorMessage = "";
 
   void loginProcess() async {
+    // 비밀번호를 암호화합니다
+    var bytes = utf8.encode(member.password);
+    var digest = sha256.convert(bytes);
+    String encryptedPassword = digest.toString();
+    // 암호화된 비밀번호를 서버에 전송합니다
+    LoginInputDto encryptedMember =
+        LoginInputDto(member.userid, encryptedPassword);
+    Logger().i(encryptedPassword);
     LoginController loginController = LoginController();
-
-    errorMessage = await loginController.memberLogin(member);
+    errorMessage = await loginController.memberLogin(encryptedMember);
 
     if (errorMessage.isEmpty) {
-      homePrepareProcess(member.userid);
+      homePrepareProcess(encryptedMember.userid);
     } else {
       setState(() {});
     }
